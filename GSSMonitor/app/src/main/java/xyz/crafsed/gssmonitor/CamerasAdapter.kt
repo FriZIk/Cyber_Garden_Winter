@@ -1,5 +1,6 @@
 package xyz.crafsed.gssmonitor
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +20,13 @@ class CamerasAdapter(val activity: MainActivity) : RecyclerView.Adapter<CamerasV
 
     override fun onBindViewHolder(holder: CamerasViewHolder, position: Int) {
 
-        if (position == itemCount-1) {
+        if (position == itemCount - 1) {
             holder.cameraImage.visibility = View.INVISIBLE
             holder.plusButton.visibility = View.VISIBLE
             holder.plusButton.isClickable = true
         } else {
             holder.cameraImage.visibility = View.VISIBLE
-            holder.itemView.setOnClickListener{
+            holder.itemView.setOnClickListener {
                 activity.openCamera(data[position])
             }
             holder.plusButton.visibility = View.GONE
@@ -33,7 +34,16 @@ class CamerasAdapter(val activity: MainActivity) : RecyclerView.Adapter<CamerasV
             holder.cameraId.text = data[position].id
 
             holder.cameraImage.loadUrl(data[position].url)
+            holder.cameraImage.setOnLongClickListener(View.OnLongClickListener {
+                removeElement(position)
+                return@OnLongClickListener true
+            })
+
+            holder.itemView.setOnClickListener {
+                activity.openCamera(data[position])
+            }
         }
+
     }
 
     override fun getItemCount(): Int {

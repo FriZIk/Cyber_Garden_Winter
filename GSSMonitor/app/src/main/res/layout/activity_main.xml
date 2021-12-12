@@ -15,7 +15,7 @@
         android:rotation="95"
         android:rotationX="138"
         android:rotationY="154"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <FrameLayout
         android:id="@+id/frame"

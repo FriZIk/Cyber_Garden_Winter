@@ -1,5 +1,6 @@
 package xyz.crafsed.gssmonitor
 
+import android.content.Context
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.webkit.WebView
@@ -19,7 +20,7 @@ class CameraActivity : AppCompatActivity() {
             loadWithOverviewMode = true
         }
 
-         web.loadUrl("http://zgame.gq:45005/")
-
+        val url = getSharedPreferences("GSS",Context.MODE_PRIVATE).getString("url","<empty>")
+        web.loadUrl(url!!)
     }
 }

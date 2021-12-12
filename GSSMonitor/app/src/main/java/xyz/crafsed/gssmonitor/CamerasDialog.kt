@@ -6,8 +6,8 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import android.app.Activity
-
-
+import android.content.Context
+import android.widget.EditText
 
 
 class CamerasDialog : DialogFragment() {
@@ -20,6 +20,9 @@ class CamerasDialog : DialogFragment() {
         createProjectAlert.setTitle("Camera configuration");
         createProjectAlert.setView(layoutInflater.inflate(R.layout.dialog_fragment, null))
             .setPositiveButton("OK") { _, _ ->
+                context?.getSharedPreferences("URLS", Context.MODE_PRIVATE)?.edit()
+                    ?.putString("url", dialog?.findViewById<EditText>(R.id.ip)?.text.toString())
+                    ?.commit()
                 iProjDialFrag!!.onDialogPositiveClick(this)
             }
             .setNegativeButton("Cancel") { _, _ ->

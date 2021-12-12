@@ -1,6 +1,9 @@
 package xyz.crafsed.gssmonitor
 
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.DialogFragment
@@ -17,10 +20,14 @@ import android.widget.Button
 
 class MainActivity : IProjectDialFrag, AppCompatActivity() {
     lateinit var cameras: CamerasFragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_GSSMonitor)
 
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
     override fun onStart() {
         super.onStart()
-        setContentView(R.layout.activity_main)
         cameras = CamerasFragment()
         supportFragmentManager.beginTransaction().replace(R.id.frame, cameras).commit()
     }
@@ -28,7 +35,6 @@ class MainActivity : IProjectDialFrag, AppCompatActivity() {
     var id = 0
     fun createCamera(view: android.view.View) {
         CamerasDialog().showNow(supportFragmentManager, "dialog")
-//        cameras.adapter.addElement(Camera(id++.toString(), "http://zgame.gq:45005/onlystream"))
     }
 
     fun removeCamera(view: android.view.View) {
@@ -36,19 +42,23 @@ class MainActivity : IProjectDialFrag, AppCompatActivity() {
     }
 
     fun openCamera(camera: Camera) {
+        getSharedPreferences("GSS", Context.MODE_PRIVATE).edit().putString("url",camera.url).putString("id",camera.id).apply()
         startActivity(Intent(this, CameraActivity::class.java))
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment?) {
         val inflater = LayoutInflater.from(this)
         val view: View = inflater.inflate(xyz.crafsed.gssmonitor.R.layout.dialog_fragment, null)
-        val ip = view.findViewById<EditText>(xyz.crafsed.gssmonitor.R.id.ip)
-        cameras.adapter.addElement(Camera(id++.toString(), "http://zgame.gq:45005/onlystream"))
-//        cameras.adapter.addElement(Camera(id++.toString(), "${ip.text}"))
+        cameras.adapter.addElement(Camera(id++.toString(), getSharedPreferences("URLS", Context.MODE_PRIVATE).getString("url", "<none>")!!))
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment?) {
         return
+    }
+
+    fun openCamera(view: android.view.View) {
+        getSharedPreferences("GSS", Context.MODE_PRIVATE).edit().putString("url","http://zgame.gq:45005/onlystream").putString("id","1").apply()
+        startActivity(Intent(this, CameraActivity::class.java))
     }
     /*
     * Какие фрагменты имеются?

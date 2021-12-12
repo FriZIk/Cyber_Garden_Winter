@@ -23,6 +23,5 @@ class CamerasViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             javaScriptEnabled = true
             loadWithOverviewMode = true
         }
-//        cameraImage.focusable = View.NOT_FOCUSABLE
     }
 }
