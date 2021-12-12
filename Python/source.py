@@ -11,7 +11,7 @@ if (cap.isOpened()== False):
 firstFrame = None
 
 while(cap.isOpened()):
-    ret, frame = cap.read()
+    ret, frame = cap.read()1
 
     if frame is None:
       break

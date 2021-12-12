@@ -4,7 +4,7 @@ import time
 
 cap = cv2.VideoCapture('video_draft.avi')
 
-start_time = time.time()
+start_time = time.time()z
 i = 0
 while(cap.isOpened()):
     ret, frame = cap.read()
